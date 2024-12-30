@@ -14,7 +14,6 @@ if(isset($_GET['dir'])){
 if(isset($_GET['kill'])){
     unlink(__FILE__);
 }
-
 echo '<link href="https://rasenmedia.my.id/assets/css/bootstrap-dark.css" id="bootstrap-style" rel="stylesheet" type="text/css" />';
 echo '<link href="https://rasenmedia.my.id/assets/css/all.min.css" rel="stylesheet" type="text/css">';
 echo '<link href="https://rasenmedia.my.id/assets/css/app-dark.css" id="app-style" rel="stylesheet" type="text/css">';
@@ -37,98 +36,43 @@ if(isset($_GET['delete'])){
     if(!file_exists($_GET['delete'])){
         $status = "<font color='green'>Success</font>";
     }
-    echo "TRY TO DELETE: ".$_GET['delete']." $status <br>"; exit;
+    echo "TRY TO DELETE: ".$_GET['delete']." $status <br>";exit;
 }
 
 scanBackdoor($path);
 
-// Fungsi untuk memindai semua file PHP di direktori
-function ngelist($dir, &$keluaran = array()) {
-    $scan = scandir($dir);
-    foreach ($scan as $key => $value) {
-        $lokasi = $dir . DIRECTORY_SEPARATOR . $value;
-        if (is_file($lokasi) && pathinfo($lokasi, PATHINFO_EXTENSION) === 'php') {
-            $keluaran[] = $lokasi; // Hanya file PHP yang ditambahkan
-        } else if (is_dir($lokasi) && $value != "." && $value != "..") {
-            ngelist($lokasi, $keluaran); // Pindai subdirektori
-        }
-    }
-    return $keluaran;
-}
-
-// Fungsi untuk membaca dan mengurai konten file PHP
-function baca($filenya) {
-    $filesize = filesize($filenya);
-    $filesize = round($filesize / 1024 / 1024, 1); // Ukuran file dalam MB
-    if ($filesize > 2) { 
-        return null; // Lewati file yang lebih besar dari 2MB
-    } else {
-        $php_file = file_get_contents($filenya);
-        $tokens = token_get_all($php_file);
-        $keluaran = array();
-        $batas = count($tokens);
-        for ($i = 0; $i < $batas; $i++) {
-            if (isset($tokens[$i][1])) {
-                $keluaran[] = $tokens[$i][1];
-            }
-        }
-        $keluaran = array_values(array_unique(array_filter(array_map('trim', $keluaran)))); // Filter token
-        return $keluaran;
-    }
-}
-
-// Fungsi untuk mendeteksi kode mencurigakan (backdoor)
-function ngecek($string) {
-    $dicari = array(
-        'base64_encode', 'base64_decode', 'eval', 'system', 'exec', 'shell_exec', 'str_rot13', 
-        'gzinflate', 'substr', 'file_get_contents', 'url_get_contents', 'move_uploaded_file', 
-        'mysql_connect', 'mysqli_connect', 'basename', 'symlink', 'fwrite', 'mail', '__file__'
-    );
-    $keluaran = "";
-    foreach ($dicari as $value) {
-        if (in_array($value, $string)) {
-            $keluaran .= $value . ", ";
-        }
-    }
-    if ($keluaran != "") {
-        $keluaran = substr($keluaran, 0, -2); // Menghapus koma terakhir
-    }
-    return $keluaran;
-}
-
-// Menyimpan hasil ke dalam file result.txt hanya jika ditemukan backdoor
-function save_result($url) {
-    $file = fopen("result.txt", "a"); // Membuka file result.txt untuk ditambah
-    fwrite($file, $url . "\n"); // Menulis URL ke dalam file
+function save($fname, $value){
+    $file = fopen($fname, "a");
+    fwrite($file, $value);
     fclose($file);
 }
 
-// Memindai file di direktori dan subdirektori
+function checkBackdoor($file_location){
+    global $path;
+    $patern = "#exec\(|gzinflate\(|file_put_contents\(|file_get_contents\(|system\(|passthru\(|shell_exec\(|move_uploaded_file\(|eval\(|base64#";
+    $contents = file_get_contents($file_location);
+    if(strlen($contents) > 0){
+        if(preg_match($patern, strtolower($contents))){
+            echo "[+] Suspect file -> <font color='red'>$file_location</font> <a href='?delete=$file_location&dir=$path'><font class='btn btn-primary bg-gradient waves-effect waves-light me-1' color='green'>[DELETE]</font></a> <br>";
+            save("wop.txt", "$file_location\n");
+            echo '<textarea class="form-control" name="content" cols="45" rows="15">'.htmlspecialchars($contents).'</textarea><br><br>';
+        }
+    }   
+}
+
 function scanBackdoor($current_dir){
-    $list = ngelist($current_dir);
-    foreach ($list as $value) {
-        if (is_file($value)) {
-            $string = baca($value);
-            if ($string) {
-                $cek = ngecek($string);
-                if (!empty($cek)) {
-                    // Hanya file yang terdeteksi berbahaya yang ditampilkan dan disimpan
-                    echo '<p style="color: red;">' . $value . ' => Found (' . $cek . ')</p><hr>';
-                    // Mengonversi path file menjadi URL lengkap
-                    $base_url = "https://" . $_SERVER['HTTP_HOST']; // Menggunakan HTTP_HOST untuk mendapatkan domain otomatis
-                    $file_url = $base_url . '/' . str_replace(DIRECTORY_SEPARATOR, '/', $value);
-                    // Menyimpan URL ke dalam file result.txt
-                    save_result($file_url);
-                    // Membuat link yang bisa diklik untuk membuka file di tab baru
-                    echo "<a href='" . $file_url . "' target='_blank' id='link" . md5($value) . "' style='display:block;'>Click to view file</a>";
-                    echo "<script>
-                            var link = document.getElementById('link" . md5($value) . "');
-                            // Memicu klik otomatis tanpa mengganggu tampilan
-                            link.click();
-                          </script>";
-                } else {
-                    echo '<p style="color: green;">' . $value . ' => Safe</p><hr>';
-                }
+    if(is_readable($current_dir)){
+        $dir_location = scandir($current_dir);
+        foreach ($dir_location as $file) {
+            if($file === "." || $file === ".."){
+                continue;
+            }
+            $file_location = str_replace("//", "/",$current_dir.'/'.$file);
+            $nFile = substr($file, -4, 4);
+            if($nFile == ".php"){
+                checkBackdoor($file_location);
+            } else if(is_dir($file_location)){
+                scanBackdoor($file_location);
             }
         }
     }
