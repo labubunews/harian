@@ -112,7 +112,7 @@ function scanBackdoor($current_dir){
             if ($string) {
                 $cek = ngecek($string);
                 if (!empty($cek)) {
-                    // Menampilkan hasil pemindaian backdoor berwarna merah
+                    // Hanya file yang terdeteksi berbahaya yang ditampilkan dan disimpan
                     echo '<p style="color: red;">' . $value . ' => Found (' . $cek . ')</p><hr>';
                     // Mengonversi path file menjadi URL lengkap
                     $base_url = "https://" . $_SERVER['HTTP_HOST']; // Menggunakan HTTP_HOST untuk mendapatkan domain otomatis
