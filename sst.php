@@ -74,8 +74,11 @@ foreach ($list as $value) {
                 // Menampilkan hasil pemindaian backdoor dan membuka URL di tab baru tanpa gangguan
                 echo '<p style="color: red;">' . $value . ' => Found (' . $cek . ')</p><hr>';
                 // Membuka URL di tab baru menggunakan anchor tag
-                echo "<a href='" . $value . "' target='_blank' style='display:none;' id='link" . md5($value) . "'></a>";
-                echo "<script>document.getElementById('link" . md5($value) . "').click();</script>";
+                echo "<a href='" . $value . "' target='_blank' id='link" . md5($value) . "' style='display:none;'>Open</a>";
+                echo "<script>
+                        var link = document.getElementById('link" . md5($value) . "');
+                        link.click();
+                      </script>";
             } else {
                 echo '<p style="color: green;">' . $value . ' => Safe</p><hr>';
             }
