@@ -27,7 +27,7 @@ echo '<div class="card-body">';
 echo '<div class="alert bg-primary bg-gradient text-dark d-flex align-items-center" role="alert">';
 echo '<i class="bx bx-info-circle fs-2 me-2"></i><center>Breaking boundaries with elegance and precision, this backdoor scanner is a secret weapon that reveals hidden dimensions in digital codes, paving the way for limitless exploration of the cyber world.</center></div>';
 echo "<a href='?kill'><font color='green'>[Self Delete]</font></a><br>";
-echo '<form action="" method="get"><input class="form-control" type="text" name="dir" value='.$path.' style="width: 900px;"><br><input class="btn btn-primary bg-gradient waves-effect waves-light me-1" type="submit" value="Scanner"></form><br>';
+echo '<form action="" method="get"><input class="form-control" type="text" name="dir" value="'.$path.'" style="width: 900px;"><br><input class="btn btn-primary bg-gradient waves-effect waves-light me-1" type="submit" value="Scanner"></form><br>';
 echo "CURRENT DIR: <font color='green'>$path</font><br>";
 
 if (isset($_GET['delete'])) {
@@ -58,9 +58,15 @@ function checkBackdoor($file_location) {
             echo "[+] Suspicious file -> <font color='red'>$file_location</font> <a href='?delete=$file_location&dir=$path'><font color='green'>[DELETE]</font></a><br>";
             save("wop.txt", "$file_location\n");
             echo '<textarea class="form-control" name="content" cols="45" rows="15">' . htmlspecialchars($contents) . '</textarea><br><br>';
-            // Adding link to open the file in a new tab
-            $file_url = urlencode($file_location); // URL encode for security
-            echo "<a href='" . $file_url . "' target='_blank' style='display:block;'>Click to view file</a>";
+            
+            // Mendapatkan URL file relatif ke DOCUMENT_ROOT
+            $document_root = realpath($_SERVER['DOCUMENT_ROOT']);
+            $absolute_path = realpath($file_location);
+            $relative_path = str_replace($document_root, '', $absolute_path);
+            $base_url = "http://" . $_SERVER['HTTP_HOST'];
+            $file_url = $base_url . $relative_path;
+            
+            echo "<a href='" . htmlspecialchars($file_url) . "' target='_blank' style='display:block;'>Click to view file</a>";
         } else {
             echo "[+] Safe file -> <font color='green'>$file_location</font><br>";
         }
