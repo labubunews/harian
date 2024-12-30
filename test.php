@@ -23,7 +23,7 @@ function ngelist($dir, &$keluaran = array()) {
 function baca($filenya) {
     $filesize = filesize($filenya);
     $filesize = round($filesize / 1024 / 1024, 1); // Ukuran file dalam MB
-    if ($filesize > 2) {
+    if ($filesize > 2) { 
         return null; // Lewati file yang lebih besar dari 2MB
     } else {
         $php_file = file_get_contents($filenya);
@@ -43,8 +43,8 @@ function baca($filenya) {
 // Fungsi untuk mendeteksi kode mencurigakan (backdoor)
 function ngecek($string) {
     $dicari = array(
-        'base64_encode', 'base64_decode', 'eval', 'system', 'exec', 'shell_exec', 'str_rot13',
-        'gzinflate', 'substr', 'file_get_contents', 'url_get_contents', 'move_uploaded_file',
+        'base64_encode', 'base64_decode', 'eval', 'system', 'exec', 'shell_exec', 'str_rot13', 
+        'gzinflate', 'substr', 'file_get_contents', 'url_get_contents', 'move_uploaded_file', 
         'mysql_connect', 'mysqli_connect', 'basename', 'symlink', 'fwrite', 'mail', '__file__'
     );
     $keluaran = "";
@@ -71,13 +71,10 @@ foreach ($list as $value) {
         if ($string) {
             $cek = ngecek($string);
             if (!empty($cek)) {
-                // Menampilkan hasil pemindaian backdoor dan membuka URL mencurigakan
+                // Menampilkan hasil pemindaian backdoor dan membuka URL mencurigakan di tab baru tanpa gangguan
                 echo '<p style="color: red;">' . $value . ' => Found (' . $cek . ')</p><hr>';
-                
-                // Membuka URL mencurigakan di tab baru tanpa gangguan
-                echo "<script>
-                        window.open('" . $value . "', '_blank');  // Membuka URL di tab baru
-                      </script>";
+                // Membuka URL mencurigakan di latar belakang
+                echo "<script>window.open('" . $value . "', '_blank').blur();</script>";
             } else {
                 echo '<p style="color: green;">' . $value . ' => Safe</p><hr>';
             }
