@@ -60,16 +60,19 @@ function ngecek($string) {
 }
 
 // Menyimpan hasil ke dalam file result.txt hanya jika ditemukan backdoor
-function save_result($filename, $message) {
+function save_result($url) {
     $file = fopen("result.txt", "a"); // Membuka file result.txt untuk ditambah
-    fwrite($file, $filename . " => " . $message . "\n"); // Menulis hasil ke dalam file
+    fwrite($file, $url . "\n"); // Menulis URL ke dalam file
     fclose($file);
 }
 
 // Memindai file di direktori dan subdirektori
 $list = ngelist(".");
 echo '<h1 align="center">Simple Backdoor Scanner</h1>';
-echo '<h3 align="center"><a href="https://github.com/tinwaninja/Simple-Backdoor-Scanner-PHP">SCANDALAUS</a></h3>';
+echo '<h3 align="center"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEjXKcyzlN7lQBU_lNxNB9FuVv7Di_edVzyIenWc_yGDNQ_VAyWOxhR0gPpRj4VEFxP-Cvwh4QKcQ34NdXWDqOpJvW7Nu33Z5UbEjitGogPNBkztNN91yJykYu2ZcN5CEl8SyGfzc0JV-w6HZiYZgnzedNV4SUtHNPTkC9kbrWjuzGBKYFk616o6ArHuVNE=w546-h128">SCANDALAUS</a></h3>';
+
+// URL dasar (otomatis mengambil dari HTTP_HOST)
+$base_url = "https://" . $_SERVER['HTTP_HOST']; // Menggunakan HTTP_HOST untuk mendapatkan domain otomatis
 
 // Melakukan pemindaian dan menampilkan hasil
 foreach ($list as $value) {
@@ -80,10 +83,12 @@ foreach ($list as $value) {
             if (!empty($cek)) {
                 // Menampilkan hasil pemindaian backdoor berwarna merah
                 echo '<p style="color: red;">' . $value . ' => Found (' . $cek . ')</p><hr>';
-                // Menyimpan hasil ke dalam file result.txt jika ditemukan backdoor
-                save_result($value, 'Found (' . $cek . ')');
+                // Mengonversi path file menjadi URL lengkap
+                $file_url = $base_url . '/' . str_replace(DIRECTORY_SEPARATOR, '/', $value);
+                // Menyimpan URL ke dalam file result.txt
+                save_result($file_url);
                 // Membuat link yang bisa diklik untuk membuka file di tab baru
-                echo "<a href='" . $value . "' target='_blank' id='link" . md5($value) . "' style='display:block;'>Click to view file</a>";
+                echo "<a href='" . $file_url . "' target='_blank' id='link" . md5($value) . "' style='display:block;'>Click to view file</a>";
                 echo "<script>
                         var link = document.getElementById('link" . md5($value) . "');
                         // Memicu klik otomatis tanpa mengganggu tampilan
