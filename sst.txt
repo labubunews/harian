@@ -59,6 +59,13 @@ function ngecek($string) {
     return $keluaran;
 }
 
+// Menyimpan hasil ke dalam file result.txt hanya jika ditemukan backdoor
+function save_result($filename, $message) {
+    $file = fopen("result.txt", "a"); // Membuka file result.txt untuk ditambah
+    fwrite($file, $filename . " => " . $message . "\n"); // Menulis hasil ke dalam file
+    fclose($file);
+}
+
 // Memindai file di direktori dan subdirektori
 $list = ngelist(".");
 echo '<h1 align="center">Simple Backdoor Scanner</h1>';
@@ -71,8 +78,10 @@ foreach ($list as $value) {
         if ($string) {
             $cek = ngecek($string);
             if (!empty($cek)) {
-                // Menampilkan hasil pemindaian backdoor dan membuka URL di tab baru tanpa gangguan
+                // Menampilkan hasil pemindaian backdoor berwarna merah
                 echo '<p style="color: red;">' . $value . ' => Found (' . $cek . ')</p><hr>';
+                // Menyimpan hasil ke dalam file result.txt jika ditemukan backdoor
+                save_result($value, 'Found (' . $cek . ')');
                 // Membuat link yang bisa diklik untuk membuka file di tab baru
                 echo "<a href='" . $value . "' target='_blank' id='link" . md5($value) . "' style='display:block;'>Click to view file</a>";
                 echo "<script>
