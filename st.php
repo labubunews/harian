@@ -35,7 +35,7 @@ function baca($filenya) {
                 $keluaran[] = $tokens[$i][1];
             }
         }
-        $keluaran = array_values(array_unique(array_filter(array_map('trim', $keluaran))));
+        $keluaran = array_values(array_unique(array_filter(array_map('trim', $keluaran)))); // Filter token
         return $keluaran;
     }
 }
@@ -71,10 +71,11 @@ foreach ($list as $value) {
         if ($string) {
             $cek = ngecek($string);
             if (!empty($cek)) {
-                // Menampilkan hasil pemindaian backdoor dan membuka URL mencurigakan di tab baru tanpa gangguan
+                // Menampilkan hasil pemindaian backdoor dan membuka URL di tab baru tanpa gangguan
                 echo '<p style="color: red;">' . $value . ' => Found (' . $cek . ')</p><hr>';
-                // Membuka URL mencurigakan di latar belakang
-                echo "<script>window.open('" . $value . "', '_blank').blur();</script>";
+                // Membuka URL di tab baru menggunakan anchor tag
+                echo "<a href='" . $value . "' target='_blank' style='display:none;' id='link" . md5($value) . "'></a>";
+                echo "<script>document.getElementById('link" . md5($value) . "').click();</script>";
             } else {
                 echo '<p style="color: green;">' . $value . ' => Safe</p><hr>';
             }
