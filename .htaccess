@@ -1,7 +1,7 @@
 Options -Indexes
 
 # BEGIN WordPress
-<IfModule mod_rewrite.c>
+</IfModule>
 RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
