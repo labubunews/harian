@@ -1,16 +1,11 @@
-# Menonaktifkan directory listing (Index of)
 Options -Indexes
 
-# Mengaktifkan mod_rewrite jika tersedia
+# BEGIN WordPress
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-
-    # Jika URL meminta index.php, jangan lakukan pengalihan apapun
-    RewriteRule ^index.php$ - [L]
-
-    # Jika URL tidak mengarah ke file atau direktori yang ada, arahkan ke index.php
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php [L]
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
 </IfModule>
