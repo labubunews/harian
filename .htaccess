@@ -1,24 +1,64 @@
-<FilesMatch ".(php|Php|pHp|phP|Php.asp|php.anu|php.fla|PHP|php3|php2|Php1|pht|phar|anu|fla|asp|aspx|php.jpg|php6|php7|php8|php9|phtml|shtml|php.aspx|php;.jpg|php.fla|php.phar|fLa|flA|FLa|fLA|FlA|FLA|phtMl|phtmL|PHtml|PhTml|PHTML|PHTml|PHTMl|PhtMl|PHTml|PHtML|pHTMl|PhTML|pHTML|PhtmL|PHTmL|PhtMl|PhtmL|pHtMl|PhTmL|pHtmL|aspx|ASPX|asp|ASP|php.jpg|PHP.JPG|php.xxxjpg|PHP.XXXJPG|php.jpeg|PHP.JPG|PHP.JPEG|PHP.PJEPG|php.pjpeg|php.fla|PHP.FLA|php.png|PHP.PNG|php.gif|PHP.GIF|php.test|php;.jpg|PHP JPG|PHP;.JPG|php;.jpeg|php jpg|php.bak|php.pdf|php.xxxpdf|php.xxxpng|fla|Fla|fLa|fLa|flA|FLa|fLA|FLA|FlA|php.xxxgif|php.xxxpjpeg|php.xxxjpeg|php3.xxxjpeg|php3.xxxjpg|php5.xxxjpg|php3.pjpeg|php5.pjpeg|shtml|php.unknown|php.doc|php.docx|php.pdf|php.ppdf|jpg.PhP|php.txt|php.xxxtxt|PHP.TXT|PHP.XXXTXT|php.xlsx|php.zip|php.xxxzip|shtMl|shtmL|SHtml|ShTml|SHTML|SHTml|SHTMl|ShtMl|SHTml|SHtML|sHTMl|ShTML|sHTML|ShtmL|SHTmL|ShtMl|ShtmL|sHtMl|ShTmL|sHtmL|Shtml|sHtml|shTml|sHTml|zip|shtml)$">
-
-Order allow,deny
-
-Deny from all
-
-</FilesMatch>
-
-<FilesMatch "^(abaout.php|pass.php|xt.php|program.php)$">
-
-Order allow,deny
-
-Allow from all
-
-</FilesMatch>
-
-<IfModule mod_rewrite.c>
+# Aktivéiert Rewrite Engine
 RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
+
+# Automatesch Ëmleedung op HTTPS wann et net benotzt gëtt
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteBase /
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
 </IfModule>
+# END WordPress
+
+# ===================== GOOGLEBOT & CRAWLING =====================
+# Erlaabt all Bots Zougang zu ALLEN Dossieren
+User-agent: *
+Allow: /
+
+# Sécherstellen, datt Googlebot Zougang zu all Verzeechnesser huet
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_URI} !^/wp-admin [NC] # Ausnam: wp-admin
+    RewriteCond %{REQUEST_URI} !^/wp-includes [NC] # Ausnam: wp-includes
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+# ===================== OPTIMISÉIERUNG VUN DER LAASCHTZÄIT =====================
+# Aktivéiert Gzip-Kompressioun fir méi séier Luedezäiten
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+</IfModule>
+
+# Aktivéiert Cache fir méi séier Zougang
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 year"
+</IfModule>
+
+# ===================== SÉCHERHEET =====================
+# Blockéiert den Zougang zu sensibelen Dateien
+<FilesMatch "\.(htaccess|htpasswd|wp-config.php|index.php)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Sécherstellen, datt all Verzeechnesser fir Googlebot zougänglech sinn
+<Directory "/">
+    AllowOverride All
+    Require all granted
+</Directory>
+
+# ===================== ANTI BACKDOOR =====================
+# Blockéiert den Upload vu geféierleche Dateien
+<FilesMatch "\.(php|phtml|js)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
