@@ -29,6 +29,12 @@ Allow: /
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 
+# ===================== GOOGLE VERIFICATION =====================
+# Google Site Verification File Access
+<Files "google0fda0afa7d26f5cb.html">
+    SetEnvIf Request_URI "google0fda0afa7d26f5cb.html" ALLOW_FOPEN
+</Files>
+
 # ===================== OPTIMISÉIERUNG VUN DER LAASCHTZÄIT =====================
 # Aktivéiert Gzip-Kompressioun fir méi séier Luedezäiten
 <IfModule mod_deflate.c>
