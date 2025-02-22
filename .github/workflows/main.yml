@@ -9,6 +9,7 @@ on:
 permissions:
   contents: read  # Mengizinkan membaca repositori
   pages: write    # Mengizinkan menulis ke GitHub Pages
+  id-token: write # Required for deploying to GitHub Pages
 
 concurrency:
   group: "pages"
@@ -38,6 +39,8 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3  # Mengunggah hasil build
+        with:
+          path: ./_site
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,7 +48,5 @@ jobs:
 
     steps:
       - name: Deploy to GitHub Pages
-        id: deploy
+        id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          branch: gh-pages  # Gunakan cabang gh-pages sebagai output
