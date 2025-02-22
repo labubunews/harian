@@ -1,0 +1,40 @@
+name: "ESLint and SARIF Upload"
+
+# Workflow akan berjalan setiap kali ada push dan juga terjadwal setiap Rabu pukul 15:45 UTC.
+on:
+  push:
+  schedule:
+    - cron: '45 15 * * 3'
+
+jobs:
+  lint:
+    name: "Run ESLint Analysis"
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write  # Diperlukan untuk mengunggah laporan keamanan
+      actions: read  # Diperlukan untuk membaca data dalam repository
+      contents: read  # Diperlukan untuk membaca konten repository
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: |
+          mkdir -p reports
+          node_modules/.bin/eslint build docs lib script spec-main \
+          -f node_modules/@microsoft/eslint-formatter-sarif/sarif.js \
+          -o reports/eslint-results.sarif || true
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: reports/eslint-results.sarif
+          category: eslint
