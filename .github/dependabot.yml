@@ -1,0 +1,45 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # Pembaruan untuk proyek PHP menggunakan Composer
+  - package-ecosystem: "composer"
+    directory: "/" # Lokasi file composer.json
+    schedule:
+      interval: "weekly" # Cek pembaruan setiap minggu
+    open-pull-requests-limit: 10 # Maksimal 10 PR yang dibuka
+    ignore:
+      - dependency-name: "phpunit/phpunit" # Contoh: Abaikan pembaruan PHPUnit
+        versions: ["9.x"]
+
+  # Pembaruan untuk proyek JavaScript menggunakan npm
+  - package-ecosystem: "npm"
+    directory: "/" # Lokasi package.json
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "react"
+        versions: ["18.x"]
+
+  # Pembaruan untuk GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/" # Lokasi workflow GitHub Actions
+    schedule:
+      interval: "daily" # Cek pembaruan setiap hari
+
+  # Pembaruan untuk Docker (jika menggunakan Docker)
+  - package-ecosystem: "docker"
+    directory: "/" # Lokasi Dockerfile
+    schedule:
+      interval: "weekly"
+
+  # Pembaruan untuk Python menggunakan pip (jika proyek Python)
+  - package-ecosystem: "pip"
+    directory: "/" # Lokasi requirements.txt atau pyproject.toml
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
