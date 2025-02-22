@@ -3,6 +3,8 @@ name: "ESLint and SARIF Upload"
 # Workflow akan berjalan setiap kali ada push dan juga terjadwal setiap Rabu pukul 15:45 UTC.
 on:
   push:
+    branches:
+      - main
   schedule:
     - cron: '45 15 * * 3'
 
