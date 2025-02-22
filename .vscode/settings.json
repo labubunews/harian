@@ -1,0 +1,4 @@
+{
+    "inlineChat.lineEmptyHint": true,
+    "github.copilot.chat.terminalChatLocation": "chatView"
+}
