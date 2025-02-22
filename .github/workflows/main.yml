@@ -1,110 +1,51 @@
-            - nama: Tutup Masalah Usang
-  penggunaan: tindakan/basi@v9.1.0
-  dengan:
-    # Token untuk repositori. Dapat diteruskan menggunakan `{{ secrets.GITHUB_TOKEN }}`.
-    repo-token: # opsional, defaultnya adalah ${{ github.token }}
-    # Pesan yang akan diposting pada masalah saat menandainya. Jika tidak ada yang diberikan, masalah tidak akan ditandai sebagai basi.
-    pesan-masalah-basi: # opsional
-    # Pesan yang akan diposting pada permintaan tarik saat menandainya. Jika tidak ada yang diberikan, permintaan tarik tidak akan ditandai sebagai basi.
-    stale-pr-message: # opsional
-    # Pesan yang akan diposting pada masalah tersebut saat menutupnya. Jika tidak ada yang diberikan, tidak akan ada komentar saat menutup masalah.
-    pesan-tutup-masalah: # opsional
-    # Pesan yang akan diposting pada permintaan penarikan saat menutupnya. Jika tidak ada yang diberikan, tidak akan ada komentar saat menutup permintaan penarikan.
-    close-pr-message: # opsional
-    # Jumlah hari yang telah berlalu sebelum suatu masalah atau permintaan penarikan ditandai sebagai kedaluwarsa. Atur ke -1 untuk tidak pernah menandai masalah atau permintaan penarikan sebagai kedaluwarsa secara otomatis.
-    hari-sebelum-basi: # opsional, defaultnya 60
-    # Jumlah hari yang berlaku untuk suatu masalah sebelum menandainya sebagai kedaluwarsa. Atur ke -1 untuk tidak pernah menandai masalah sebagai kedaluwarsa secara otomatis. Ganti opsi "hari-sebelum-kedaluwarsa" yang hanya terkait dengan masalah.
-    hari-sebelum-terbit-basi: # opsional
-    # Jumlah hari yang telah berlalu sebelum permintaan penarikan ditandai sebagai kedaluwarsa. Atur ke -1 untuk tidak pernah menandai permintaan penarikan sebagai kedaluwarsa secara otomatis. Ganti opsi "hari-sebelum-kedaluwarsa" yang hanya terkait dengan permintaan penarikan.
-    hari-sebelum-pr-basi: # opsional
-    # Jumlah hari yang diperlukan untuk menunggu guna menutup masalah atau permintaan penarikan setelah ditandai kedaluwarsa. Tetapkan ke -1 untuk tidak pernah menutup masalah atau permintaan penarikan yang kedaluwarsa.
-    hari-sebelum-tutup: # opsional, defaultnya adalah 7
-    # Jumlah hari yang harus ditunggu untuk menutup masalah setelah ditandai basi. Atur ke -1 untuk tidak pernah menutup masalah basi. Ganti opsi "hari-sebelum-tutup" yang hanya terkait masalah.
-    hari-sebelum-penutupan-penerbitan: # opsional
-    # Jumlah hari yang harus ditunggu untuk menutup permintaan penarikan setelah ditandai basi. Atur ke -1 untuk tidak pernah menutup permintaan penarikan yang basi. Ganti opsi "hari-sebelum-penutupan" yang hanya terkait dengan permintaan penarikan.
-    hari-sebelum-pr-tutup: # opsional
-    # Label yang diterapkan bila suatu masalah sudah basi.
-    stale-issue-label: # opsional, defaultnya Usang
-    # Label yang diterapkan saat masalah ditutup.
-    tutup-label-masalah: # opsional
-    # Label yang menunjukkan bahwa suatu masalah dikecualikan dari penandaan kedaluwarsa. Pisahkan beberapa label dengan koma (misalnya "label1,label2").
-    label-masalah-yang-dikecualikan: # opsional, defaultnya adalah
-    # Alasan untuk digunakan saat menutup suatu masalah.
-    alasan-penutupan-masalah: # opsional, defaultnya adalah not_planned
-    # Label yang akan diterapkan saat permintaan penarikan sudah basi.
-    stale-pr-label: # opsional, defaultnya adalah Usang
-    # Label yang akan diterapkan saat permintaan penarikan ditutup.
-    tutup-pr-label: # opsional
-    # Label yang berarti permintaan penarikan dikecualikan dari penandaan sebagai kedaluwarsa. Pisahkan beberapa label dengan koma (misalnya "label1,label2").
-    label-pr-yang-dikecualikan: # opsional, defaultnya adalah
-    # Tonggak pencapaian yang berarti suatu masalah atau permintaan penarikan dikecualikan dari penandaan sebagai basi. Pisahkan beberapa tonggak pencapaian dengan koma (misalnya, "tonggak pencapaian1,tonggak pencapaian2").
-    except-milestones: # opsional, defaultnya adalah
-    # Tonggak-tonggak yang berarti suatu masalah dikecualikan dari penandaan sebagai basi. Pisahkan beberapa tonggak dengan koma (misalnya "tonggak1,tonggak2"). Ganti opsi "tonggak-yang-dikecualikan" yang hanya terkait masalah.
-    except-issue-milestones: # opsional, defaultnya adalah
-    # Tonggak-tonggak yang berarti permintaan penarikan dikecualikan dari penandaan sebagai kedaluwarsa. Pisahkan beberapa tonggak dengan koma (misalnya, "tonggak1,tonggak2"). Ganti opsi "tonggak-yang-dikecualikan" yang hanya terkait dengan permintaan penarikan.
-    except-pr-milestones: # opsional, defaultnya adalah
-    # Kecualikan semua masalah dan permintaan penarikan dengan milestone agar tidak ditandai sebagai basi. Default-nya adalah false.
-    except-all-milestones: # opsional, defaultnya salah
-    # Kecualikan semua masalah dengan milestone agar tidak ditandai sebagai basi. Ganti opsi "exempt-all-milestones" yang hanya terkait masalah.
-    except-all-issue-milestones: # opsional, defaultnya adalah
-    # Kecualikan semua permintaan penarikan dengan milestone agar tidak ditandai sebagai basi. Ganti opsi "exempt-all-milestones" yang hanya terkait dengan permintaan penarikan.
-    except-all-pr-milestones: # opsional, defaultnya adalah
-    # Hanya masalah atau permintaan penarikan dengan semua label ini yang diperiksa jika sudah basi. Defaultnya adalah `` (dinonaktifkan) dan dapat berupa daftar label yang dipisahkan koma.
-    only-labels: # opsional, defaultnya adalah
-    # Hanya masalah atau permintaan penarikan dengan setidaknya satu label ini yang diperiksa jika sudah basi. Defaultnya adalah `` (dinonaktifkan) dan dapat berupa daftar label yang dipisahkan koma.
-    any-of-labels: # opsional, defaultnya adalah
-    # Hanya masalah dengan setidaknya satu label ini yang diperiksa jika sudah basi. Defaultnya adalah `` (dinonaktifkan) dan dapat berupa daftar label yang dipisahkan koma. Ganti opsi "salah satu label" yang hanya terkait masalah.
-    any-of-issue-labels: # opsional, defaultnya adalah
-    # Hanya permintaan penarikan dengan setidaknya satu dari label ini yang diperiksa jika sudah basi. Defaultnya adalah `` (dinonaktifkan) dan dapat berupa daftar label yang dipisahkan koma. Ganti opsi "salah satu label" hanya untuk permintaan penarikan.
-    any-of-pr-labels: # opsional, defaultnya adalah
-    # Hanya masalah dengan semua label ini yang diperiksa jika sudah basi. Defaultnya adalah `[]` (dinonaktifkan) dan dapat berupa daftar label yang dipisahkan koma. Ganti opsi "hanya-label" yang berkaitan dengan masalah saja.
-    only-issue-labels: # opsional, defaultnya adalah
-    # Hanya permintaan penarikan dengan semua label ini yang diperiksa jika sudah basi. Defaultnya adalah `[]` (dinonaktifkan) dan dapat berupa daftar label yang dipisahkan koma. Ganti opsi "hanya-label" yang berkaitan dengan permintaan penarikan saja.
-    only-pr-labels: # opsional, defaultnya adalah
-    # Jumlah maksimum operasi per proses, digunakan untuk mengendalikan pembatasan laju (berkaitan dengan GitHub API CRUD).
-    operasi-per-operasi: # opsional, defaultnya 30
-    # Hapus label basi dari masalah dan tarik permintaan saat diperbarui atau diberi komentar.
-    remove-stale-when-updated: # opsional, defaultnya benar
-    # Hapus label yang basi dari masalah saat masalah tersebut diperbarui atau diberi komentar. Ganti opsi "remove-stale-when-updated" yang hanya terkait dengan masalah tersebut.
-    remove-issue-stale-when-updated: # opsional, defaultnya adalah
-    # Hapus label yang tidak berlaku lagi dari permintaan penarikan saat diperbarui atau diberi komentar. Ganti opsi "remove-stale-when-updated" yang hanya terkait dengan permintaan penarikan.
-    remove-pr-stale-when-updated: # opsional, defaultnya adalah
-    # Jalankan prosesor dalam mode debug tanpa benar-benar melakukan operasi apa pun pada masalah langsung.
-    debug-hanya: # opsional, defaultnya salah
-    # Urutan untuk mendapatkan masalah atau menarik permintaan. Defaultnya adalah false, yang menurun.
-    ascending: # opsional, defaultnya salah
-    # Hapus cabang git setelah menutup permintaan penarikan yang basi.
-    hapus-cabang: # opsional, defaultnya salah
-    # Tanggal yang digunakan untuk melewati tindakan basi pada masalah/permintaan penarikan yang dibuat sebelumnya (ISO 8601 atau RFC 2822).
-    tanggal-mulai: # opsional, defaultnya adalah
-    # Penerima yang mengecualikan masalah atau permintaan penarikan agar tidak ditandai sebagai kedaluwarsa. Pisahkan beberapa penerima dengan koma (misalnya, "user1,user2").
-    penerima-bebas-yang-ditugaskan: # opsional, defaultnya adalah
-    # Penerima yang mengecualikan masalah agar tidak ditandai sebagai basi. Pisahkan beberapa penerima dengan koma (misalnya, "user1,user2"). Ganti opsi "exempt-assignees" yang hanya terkait masalah.
-    penerima-penerima-masalah-yang-dikecualikan: # opsional, defaultnya adalah
-    # Penerima yang mengecualikan permintaan tarik agar tidak ditandai sebagai kedaluwarsa. Pisahkan beberapa penerima dengan koma (misalnya, "user1,user2"). Ganti opsi "exempt-assignees" yang hanya terkait dengan permintaan tarik.
-    except-pr-assignees: # opsional, defaultnya adalah
-    # Kecualikan semua masalah dan permintaan penarikan dengan penerima tugas agar tidak ditandai sebagai basi. Default-nya adalah false.
-    except-all-assignees: # opsional, defaultnya salah
-    # Kecualikan semua masalah dengan penerima tugas agar tidak ditandai sebagai basi. Ganti opsi "exempt-all-assignees" yang hanya terkait masalah.
-    except-all-issue-assignees: # opsional, defaultnya adalah
-    # Kecualikan semua permintaan penarikan dengan penerima tugas agar tidak ditandai sebagai kedaluwarsa. Ganti opsi "exempt-all-assignees" yang hanya terkait dengan permintaan penarikan.
-    except-all-pr-assignees: # opsional, defaultnya adalah
-    # Kecualikan permintaan penarikan draf agar tidak ditandai sebagai basi. Default-nya adalah false.
-    except-draft-pr: # opsional, defaultnya salah
-    # Menampilkan beberapa statistik di akhir mengenai alur kerja yang basi (hanya saat log diaktifkan).
-    enable-statistics: # opsional, defaultnya benar
-    # Daftar label yang dibatasi koma untuk ditambahkan saat masalah atau permintaan penarikan menjadi tidak basi.
-    label-yang-akan-ditambahkan-ketika-tidak-basi: # opsional, defaultnya adalah
-    # Daftar label yang dibatasi koma untuk dihapus saat masalah atau permintaan penarikan menjadi basi.
-    label-yang-akan-dihapus-ketika-basi: # opsional, defaultnya adalah
-    # Daftar label yang dibatasi koma untuk dihapus saat masalah atau permintaan penarikan menjadi tidak basi.
-    label-yang-akan-dihapus-ketika-tidak-basi: # opsional, defaultnya adalah
-    # Pembaruan apa pun (pembaruan/komentar) dapat mengatur ulang waktu diam basi pada masalah dan permintaan penarikan.
-    abaikan-pembaruan: # opsional, defaultnya salah
-    # Setiap pembaruan (pembaruan/komentar) dapat mengatur ulang waktu tunggu yang lama pada masalah tersebut. Abaikan opsi "abaikan pembaruan" yang hanya terkait dengan masalah tersebut.
-    abaikan-pembaruan-masalah: # opsional, defaultnya adalah
-    # Setiap pembaruan (pembaruan/komentar) dapat mengatur ulang waktu idle basi pada permintaan penarikan. Ganti opsi "abaikan-pembaruan" yang hanya terkait permintaan penarikan.
-    abaikan-pr-pembaruan: # opsional, defaultnya adalah
-    # Hanya masalah atau permintaan penarikan dengan penerima tugas yang akan ditandai sebagai basi secara otomatis.
-    include-only-assigned: # opsional, defaultnya salah
-          
+name: "Deploy Jekyll to GitHub Pages"
+
+on:
+  workflow_dispatch:  # Memungkinkan menjalankan workflow secara manual
+  push:
+    branches:
+      - main  # Jalankan saat ada perubahan di cabang 'main'
+
+permissions:
+  contents: read  # Mengizinkan membaca repositori
+  pages: write    # Mengizinkan menulis ke GitHub Pages
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false  # Tidak membatalkan workflow yang sedang berjalan
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Jalankan di lingkungan Ubuntu terbaru
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Mengambil kode dari repositori
+      
+      - name: Setup Ruby and Jekyll
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'  # Versi Ruby yang digunakan
+
+      - name: Install dependencies
+        run: |
+          gem install jekyll bundler  # Instal Jekyll dan Bundler
+          bundle install  # Instal semua dependensi di Gemfile (jika ada)
+
+      - name: Build the Jekyll site
+        run: |
+          bundle exec jekyll build  # Bangun situs Jekyll ke dalam folder '_site'
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3  # Mengunggah hasil build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # Pastikan build selesai sebelum deploy
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
+        with:
+          branch: gh-pages  # Gunakan cabang gh-pages sebagai output
