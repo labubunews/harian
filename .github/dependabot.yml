@@ -43,3 +43,10 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+
+  # Pembaruan untuk proyek Go menggunakan Go modules
+  - package-ecosystem: "gomod"
+    directory: "/" # Lokasi go.mod
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
