@@ -13,8 +13,8 @@ Use this section to tell people about which versions of your project are current
 
 Use this section to tell people how to report a vulnerability.
 
-Please report security vulnerabilities by emailing [security@labubunews.com](mailto:security@labubunews.com).
+Please report security vulnerabilities by emailing
 
-+ CategoryInfo          : ObjectNotFound: (C:\Users\USER 388GROUP\harian:String) [Remove-Item], ItemNotFoundExce  
++ CategoryInfo          : ObjectNotFound: 
  ption
-  + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand
+  + FullyQualifiedErrorId : 
