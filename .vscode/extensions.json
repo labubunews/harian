@@ -1,6 +1,8 @@
 {
     "recommendations": [
         "ms-vscode-remote.remote-containers",
-        "github.copilot-chat"
+        "github.copilot-chat",
+        "github.vscode-pull-request-github",
+        "esbenp.prettier-vscode"
     ]
 }

@@ -1,6 +1,5 @@
 name: "ESLint and SARIF Upload"
 
-# Workflow akan berjalan setiap kali ada push dan juga terjadwal setiap Rabu pukul 15:45 UTC.
 on:
   push:
     branches:
@@ -13,15 +12,15 @@ jobs:
     name: "Run ESLint Analysis"
     runs-on: ubuntu-latest
     permissions:
-      security-events: write  # Diperlukan untuk mengunggah laporan keamanan
-      actions: read  # Diperlukan untuk membaca data dalam repository
-      contents: read  # Diperlukan untuk membaca konten repository
+      security-events: write
+      actions: read
+      contents: read
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
@@ -40,3 +39,47 @@ jobs:
         with:
           sarif_file: reports/eslint-results.sarif
           category: eslint
+
+  test:
+    name: "Run Jest Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Jest
+        run: npm test
+
+  format:
+    name: "Run Prettier"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Prettier
+        run: |
+          mkdir -p reports
+          npx prettier --check "src/**/*.js" > reports/prettier-results.txt || true
+
+      - name: Upload Prettier results
+        uses: actions/upload-artifact@v2
+        with:
+          name: prettier-results
+          path: reports/prettier-results.txt

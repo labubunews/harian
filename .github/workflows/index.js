@@ -30,6 +30,13 @@ app.delete('/api/items/:id', (req, res) => {
   res.json({ message: `DELETE request received for item ${id}` });
 });
 
+// Endpoint PATCH
+app.patch('/api/items/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedFields = req.body;
+  res.json({ message: `PATCH request received for item ${id}`, updatedFields });
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

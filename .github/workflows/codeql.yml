@@ -11,7 +11,7 @@ on:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ${{ matrix.language == 'swift' && 'macos-latest' || 'ubuntu-latest' }}
+    runs-on: ${{ matrix.language == 'swift' }} && macos-latest || ubuntu-latest
     permissions:
       security-events: write
       packages: read
@@ -26,11 +26,12 @@ jobs:
             build-mode: 'automatic'
           - language: 'typescript'
             build-mode: 'automatic'
-          # Tambahkan bahasa lain yang ingin Anda analisis di sini
+          - language: 'python'
+            build-mode: 'automatic'
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3

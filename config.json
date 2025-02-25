@@ -1,0 +1,17 @@
+{
+  "rawField": "key=value",
+  "cache": "duration",
+  "field": "key=value",
+  "header": "key:value",
+  "hostname": "github.com",
+  "include": false,
+  "input": "file",
+  "jq": "string",
+  "method": "GET",
+  "paginate": false,
+  "preview": "names",
+  "silent": false,
+  "slurp": false,
+  "template": "string",
+  "verbose": false
+}
