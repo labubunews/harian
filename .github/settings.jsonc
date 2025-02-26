@@ -1,7 +1,4 @@
 {
-    "inlineChat.lineEmptyHint": true,
-    "github.copilot.chat.terminalChatLocation": "chatView",
-    "remoteHub.richNavigation.enabled": true,
     "git.allowForcePush": true,
     "git.allowNoVerifyCommit": true,
     "git.alwaysShowStagedChangesResourceGroup": true,
@@ -104,6 +101,7 @@
     "gitlens.graph.minimap.enabled": false,
     "php.validate.executablePath": "",
     "remoteHub.experimental.useDiffMatchPatch": true,
+    "remoteHub.richNavigation.enabled": true,
     "remoteHub.experimental.syncRecentList": true,
     "remoteHub.richNavigation.indexMode": {
         "branch": "latest"
