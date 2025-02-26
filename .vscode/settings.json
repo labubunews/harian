@@ -83,7 +83,7 @@
         "jupyter-notebook": true,
         "gitlens.rebase": true
     },
-    "workbench.editor.defaultBinaryEditor": "default",
+    "workbench.editor.defaultBinaryEditor": "vscode.markdown.preview.editor",
     "workbench.editor.revealIfOpen": true,
     "workbench.editor.sharedViewState": true,
     "workbench.editor.preferHistoryBasedLanguageDetection": true,
